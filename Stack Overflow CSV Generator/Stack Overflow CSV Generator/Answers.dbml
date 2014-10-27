@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="StackOverflow" Class="AnswersDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=SCOTT-LAPTOP;Initial Catalog=StackOverflow;Integrated Security=True" SettingsObjectName="Stack_Overflow_CSV_Generator.Properties.Settings" SettingsPropertyName="StackOverflowConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="SO.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AboutMe" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Age" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="DownVotes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmailHash" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="LastAccessDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Reputation" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpVotes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Views" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WebsiteUrl" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="SO.Posts" Member="Posts">
+    <Type Name="Post">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AcceptedAnswerId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AnswerCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Body" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="ClosedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CommentCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CommunityOwnedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FavoriteCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastEditDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastEditorDisplayName" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="LastEditorUserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OwnerUserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ParentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PostTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Tags" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ViewCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
