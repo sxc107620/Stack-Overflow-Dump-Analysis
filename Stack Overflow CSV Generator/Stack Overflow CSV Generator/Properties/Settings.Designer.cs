@@ -32,5 +32,16 @@ namespace Stack_Overflow_CSV_Generator.Properties {
                 return ((string)(this["StackOverflowConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=MILLENNIUM-FALC;Initial Catalog=StackOverflow;Integrated Security=Tru" +
+            "e")]
+        public string StackOverflowConnectionString1 {
+            get {
+                return ((string)(this["StackOverflowConnectionString1"]));
+            }
+        }
     }
 }

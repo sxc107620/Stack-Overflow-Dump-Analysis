@@ -5,19 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using java.io;
+using java.util;
+using edu.stanford.nlp.tagger.maxent;
+using edu.stanford.nlp.ling;
+using Console = System.Console;
 
 namespace Stack_Overflow_CSV_Generator
 {
     class Program
     {
-        //Constants pulled from the database
-        const int MEAN = 2;
-        const float STDEV = 12.77f;
-        const int MULT = 1; //Number of Standard Deviations above the mean to take (For Score)
-        const String Mode = "accepted"; //Accepted answers or Top Answers (relative to the mean)
+        const int MEAN = 2; //Constant pulled from the database
+        const float STDEV = 12.77f; //Constant pulled from the database
+        const int MULT = 3; //Number of Standard Deviations above the mean to take (For Score)
+        const String Mode = "top"; //"accepted" answers or "top" Answers (relative to the mean)
         const int MEDIAN = 12253720 / 4; //12253720 is the median ID for accepted answers. But I have to use 8 partitions or I run Out of Memory.
-        const int ACCEPTMULT = 6; //Which of the 8 partitions (1-8) to use for Accepted Answers
-        const String FILE = "AcceptedAnswers_6.csv";
+        const int ACCEPTMULT = 1; //Which of the partitions (1-9) to use for Accepted Answers
+        const String FILE = "TopAnswers_3.csv";
         static void Main(string[] args)
         {
             AnswersDataContext dc = new AnswersDataContext();
@@ -40,7 +44,7 @@ namespace Stack_Overflow_CSV_Generator
                     answerList = from post in dc.Posts
                                  where acceptedAnswerIDs.Contains(post.Id)
                                  where post.Id < MEDIAN * ACCEPTMULT
-                                 where post.Id > MEDIAN * (ACCEPTMULT-1)
+                                 where post.Id >= MEDIAN * (ACCEPTMULT-1)
                                  select post;
                     break;
                 case "top":
@@ -55,16 +59,17 @@ namespace Stack_Overflow_CSV_Generator
                     break;
             }
             Console.WriteLine("Number of Answers: " + answerList.Count());
-            System.IO.StreamWriter file = new System.IO.StreamWriter(FILE);
+            System.IO.StreamWriter file = System.IO.File.AppendText(FILE);
+            var tagger = new MaxentTagger(@".\models\english-left3words-distsim.tagger");
             foreach (var post in answerList)
             {
-                int wordCount = getWordCount(post.Body);
+                String justWords = StripHTMLAndCode(post.Body);
+                int[] posCounts = getPosCounts(justWords, tagger);
                 bool hasLink = hasALink(post.Body);
                 bool hasCode = hasSomeCode(post.Body);
-                int answererReputation = getPosterReputation((int)post.OwnerUserId, dc);
                 int responseTime = getResponseTime(post.CreationDate, post.ParentId, dc);
-                //Console.WriteLine(wordCount + "," + hasLink + "," + hasCode + "," + answererReputation + "," + responseTime);
-                file.WriteLine(wordCount + "," + hasLink + "," + hasCode + "," + answererReputation + "," + responseTime);    
+                //Console.WriteLine(posCounts[0] + "," + posCounts[1] + "," + posCounts[2] + "," + posCounts[3] + "," + hasLink + "," + hasCode + "," + responseTime);    
+                file.WriteLine(posCounts[0] + "," + posCounts[1] + "," + posCounts[2] + "," + posCounts[3] + "," + hasLink + "," + hasCode + "," + responseTime);    
             }
             file.Flush();
             file.Close();
@@ -72,12 +77,6 @@ namespace Stack_Overflow_CSV_Generator
             Console.WriteLine("Press Any Key to exit. Completed at " + System.DateTime.Now.ToLongTimeString());
             Console.ReadKey();
             return;
-        }
-
-        static int getWordCount(String s)
-        {
-            return s.Split(new char[] { ' ', '.', '?' },
-                             StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
         static bool hasALink(String s)
@@ -90,20 +89,53 @@ namespace Stack_Overflow_CSV_Generator
             return s.Contains("<code>");
         }
 
-        static int getPosterReputation(int ownerID, AnswersDataContext dc)
+        static int[] getPosCounts(string text, MaxentTagger tagger)
         {
-            if (ownerID < 1)
+            int[] retVals = {0, 0, 0, 0};
+            //Nouns, Verbs, Adjectives, Total
+            var sentences = MaxentTagger.tokenizeText(new StringReader(text)).toArray();
+            foreach (ArrayList sentence in sentences)
             {
-                return 0;
+                var taggedSentence = tagger.tagSentence(sentence);
+                Iterator iter = taggedSentence.iterator();
+                while (iter.hasNext())
+                {
+                    var word = iter.next();
+                    string type = word.ToString();
+                    type = type.Split('/')[1];
+                    try
+                    {
+                        type = type.Substring(0, 1);
+                    }
+                    catch (Exception ex)
+                    {
+                        continue;
+                    }
+                    switch (type[0])
+                    {
+                        case 'N': //Nouns
+                        case 'P': //Pronouns
+                            retVals[0]++;
+                            retVals[3]++;
+                            break;
+                        case 'V': //Verbs
+                            retVals[1]++;
+                            retVals[3]++;
+                            break;
+                        case 'J': //Adjectives
+                            retVals[2]++;
+                            retVals[3]++;
+                            break;
+                        default: //Increment word count if it's not a punctuation
+                            if(Char.IsLetter(type[0]))
+                            {
+                                retVals[3]++;
+                            }
+                            break;
+                    }
+                }
             }
-            var answerer = from s in dc.Users
-                           where s.Id == ownerID
-                           select s;
-            if (answerer.Count() < 1) //Answerer does not exist
-            {
-                return 0;
-            }
-            return answerer.First().Reputation;
+            return retVals;
         }
 
         static int getResponseTime(DateTime postTime, int? questionID, AnswersDataContext dc)
@@ -122,6 +154,41 @@ namespace Stack_Overflow_CSV_Generator
             DateTime questionTime = question.First();
             TimeSpan offset = postTime.Subtract(questionTime);
             return (int)offset.TotalMinutes;
+        }
+
+        //This method strips HTML and hyperlinks from the provided string
+        //Method courtesy of http://www.dotnetperls.com/remove-html-tags
+        //The following Regex is static for performance reasons.
+        static Regex CodeRegex = new Regex("<code>[^¶]*?</code>", RegexOptions.Compiled);
+        static Regex LinkRegex = new Regex("<a href[^¶]*?</a>", RegexOptions.Compiled);
+        static string StripHTMLAndCode(string source)
+        {
+            source = CodeRegex.Replace(source, "");
+            source = LinkRegex.Replace(source, "");
+            char[] array = new char[source.Length];
+            int arrayIndex = 0;
+            bool inside = false;
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                char let = source[i];
+                if (let == '<')
+                {
+                    inside = true;
+                    continue;
+                }
+                if (let == '>')
+                {
+                    inside = false;
+                    continue;
+                }
+                if (!inside)
+                {
+                    array[arrayIndex] = let;
+                    arrayIndex++;
+                }
+            }
+            return new string(array, 0, arrayIndex);
         }
 
         //Ideally I convert this program over to a Command Line Argument based program

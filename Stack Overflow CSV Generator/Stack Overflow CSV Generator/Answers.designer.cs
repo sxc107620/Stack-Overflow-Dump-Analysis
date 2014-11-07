@@ -30,16 +30,16 @@ namespace Stack_Overflow_CSV_Generator
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertUser(User instance);
-    partial void UpdateUser(User instance);
-    partial void DeleteUser(User instance);
     partial void InsertPost(Post instance);
     partial void UpdatePost(Post instance);
     partial void DeletePost(Post instance);
+    partial void InsertUser(User instance);
+    partial void UpdateUser(User instance);
+    partial void DeleteUser(User instance);
     #endregion
 		
 		public AnswersDataContext() : 
-				base(global::Stack_Overflow_CSV_Generator.Properties.Settings.Default.StackOverflowConnectionString, mappingSource)
+				base(global::Stack_Overflow_CSV_Generator.Properties.Settings.Default.StackOverflowConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -68,14 +68,6 @@ namespace Stack_Overflow_CSV_Generator
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<User> Users
-		{
-			get
-			{
-				return this.GetTable<User>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Post> Posts
 		{
 			get
@@ -83,378 +75,12 @@ namespace Stack_Overflow_CSV_Generator
 				return this.GetTable<Post>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="SO.Users")]
-	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _AboutMe;
-		
-		private System.Nullable<int> _Age;
-		
-		private System.DateTime _CreationDate;
-		
-		private string _DisplayName;
-		
-		private int _DownVotes;
-		
-		private string _EmailHash;
-		
-		private System.DateTime _LastAccessDate;
-		
-		private string _Location;
-		
-		private int _Reputation;
-		
-		private int _UpVotes;
-		
-		private int _Views;
-		
-		private string _WebsiteUrl;
-		
-		private System.Nullable<int> _AccountId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnAboutMeChanging(string value);
-    partial void OnAboutMeChanged();
-    partial void OnAgeChanging(System.Nullable<int> value);
-    partial void OnAgeChanged();
-    partial void OnCreationDateChanging(System.DateTime value);
-    partial void OnCreationDateChanged();
-    partial void OnDisplayNameChanging(string value);
-    partial void OnDisplayNameChanged();
-    partial void OnDownVotesChanging(int value);
-    partial void OnDownVotesChanged();
-    partial void OnEmailHashChanging(string value);
-    partial void OnEmailHashChanged();
-    partial void OnLastAccessDateChanging(System.DateTime value);
-    partial void OnLastAccessDateChanged();
-    partial void OnLocationChanging(string value);
-    partial void OnLocationChanged();
-    partial void OnReputationChanging(int value);
-    partial void OnReputationChanged();
-    partial void OnUpVotesChanging(int value);
-    partial void OnUpVotesChanged();
-    partial void OnViewsChanging(int value);
-    partial void OnViewsChanged();
-    partial void OnWebsiteUrlChanging(string value);
-    partial void OnWebsiteUrlChanged();
-    partial void OnAccountIdChanging(System.Nullable<int> value);
-    partial void OnAccountIdChanged();
-    #endregion
-		
-		public User()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id
+		public System.Data.Linq.Table<User> Users
 		{
 			get
 			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AboutMe", DbType="NVarChar(MAX)")]
-		public string AboutMe
-		{
-			get
-			{
-				return this._AboutMe;
-			}
-			set
-			{
-				if ((this._AboutMe != value))
-				{
-					this.OnAboutMeChanging(value);
-					this.SendPropertyChanging();
-					this._AboutMe = value;
-					this.SendPropertyChanged("AboutMe");
-					this.OnAboutMeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Age", DbType="Int")]
-		public System.Nullable<int> Age
-		{
-			get
-			{
-				return this._Age;
-			}
-			set
-			{
-				if ((this._Age != value))
-				{
-					this.OnAgeChanging(value);
-					this.SendPropertyChanging();
-					this._Age = value;
-					this.SendPropertyChanged("Age");
-					this.OnAgeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreationDate", DbType="DateTime NOT NULL")]
-		public System.DateTime CreationDate
-		{
-			get
-			{
-				return this._CreationDate;
-			}
-			set
-			{
-				if ((this._CreationDate != value))
-				{
-					this.OnCreationDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreationDate = value;
-					this.SendPropertyChanged("CreationDate");
-					this.OnCreationDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DisplayName", DbType="NVarChar(40) NOT NULL", CanBeNull=false)]
-		public string DisplayName
-		{
-			get
-			{
-				return this._DisplayName;
-			}
-			set
-			{
-				if ((this._DisplayName != value))
-				{
-					this.OnDisplayNameChanging(value);
-					this.SendPropertyChanging();
-					this._DisplayName = value;
-					this.SendPropertyChanged("DisplayName");
-					this.OnDisplayNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DownVotes", DbType="Int NOT NULL")]
-		public int DownVotes
-		{
-			get
-			{
-				return this._DownVotes;
-			}
-			set
-			{
-				if ((this._DownVotes != value))
-				{
-					this.OnDownVotesChanging(value);
-					this.SendPropertyChanging();
-					this._DownVotes = value;
-					this.SendPropertyChanged("DownVotes");
-					this.OnDownVotesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailHash", DbType="NVarChar(40)")]
-		public string EmailHash
-		{
-			get
-			{
-				return this._EmailHash;
-			}
-			set
-			{
-				if ((this._EmailHash != value))
-				{
-					this.OnEmailHashChanging(value);
-					this.SendPropertyChanging();
-					this._EmailHash = value;
-					this.SendPropertyChanged("EmailHash");
-					this.OnEmailHashChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAccessDate", DbType="DateTime NOT NULL")]
-		public System.DateTime LastAccessDate
-		{
-			get
-			{
-				return this._LastAccessDate;
-			}
-			set
-			{
-				if ((this._LastAccessDate != value))
-				{
-					this.OnLastAccessDateChanging(value);
-					this.SendPropertyChanging();
-					this._LastAccessDate = value;
-					this.SendPropertyChanged("LastAccessDate");
-					this.OnLastAccessDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="NVarChar(100)")]
-		public string Location
-		{
-			get
-			{
-				return this._Location;
-			}
-			set
-			{
-				if ((this._Location != value))
-				{
-					this.OnLocationChanging(value);
-					this.SendPropertyChanging();
-					this._Location = value;
-					this.SendPropertyChanged("Location");
-					this.OnLocationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reputation", DbType="Int NOT NULL")]
-		public int Reputation
-		{
-			get
-			{
-				return this._Reputation;
-			}
-			set
-			{
-				if ((this._Reputation != value))
-				{
-					this.OnReputationChanging(value);
-					this.SendPropertyChanging();
-					this._Reputation = value;
-					this.SendPropertyChanged("Reputation");
-					this.OnReputationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpVotes", DbType="Int NOT NULL")]
-		public int UpVotes
-		{
-			get
-			{
-				return this._UpVotes;
-			}
-			set
-			{
-				if ((this._UpVotes != value))
-				{
-					this.OnUpVotesChanging(value);
-					this.SendPropertyChanging();
-					this._UpVotes = value;
-					this.SendPropertyChanged("UpVotes");
-					this.OnUpVotesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Views", DbType="Int NOT NULL")]
-		public int Views
-		{
-			get
-			{
-				return this._Views;
-			}
-			set
-			{
-				if ((this._Views != value))
-				{
-					this.OnViewsChanging(value);
-					this.SendPropertyChanging();
-					this._Views = value;
-					this.SendPropertyChanged("Views");
-					this.OnViewsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WebsiteUrl", DbType="NVarChar(200)")]
-		public string WebsiteUrl
-		{
-			get
-			{
-				return this._WebsiteUrl;
-			}
-			set
-			{
-				if ((this._WebsiteUrl != value))
-				{
-					this.OnWebsiteUrlChanging(value);
-					this.SendPropertyChanging();
-					this._WebsiteUrl = value;
-					this.SendPropertyChanged("WebsiteUrl");
-					this.OnWebsiteUrlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="Int")]
-		public System.Nullable<int> AccountId
-		{
-			get
-			{
-				return this._AccountId;
-			}
-			set
-			{
-				if ((this._AccountId != value))
-				{
-					this.OnAccountIdChanging(value);
-					this.SendPropertyChanging();
-					this._AccountId = value;
-					this.SendPropertyChanged("AccountId");
-					this.OnAccountIdChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<User>();
 			}
 		}
 	}
@@ -952,6 +578,380 @@ namespace Stack_Overflow_CSV_Generator
 					this._ViewCount = value;
 					this.SendPropertyChanged("ViewCount");
 					this.OnViewCountChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="SO.Users")]
+	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _AboutMe;
+		
+		private System.Nullable<int> _Age;
+		
+		private System.DateTime _CreationDate;
+		
+		private string _DisplayName;
+		
+		private int _DownVotes;
+		
+		private string _EmailHash;
+		
+		private System.DateTime _LastAccessDate;
+		
+		private string _Location;
+		
+		private int _Reputation;
+		
+		private int _UpVotes;
+		
+		private int _Views;
+		
+		private string _WebsiteUrl;
+		
+		private System.Nullable<int> _AccountId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnAboutMeChanging(string value);
+    partial void OnAboutMeChanged();
+    partial void OnAgeChanging(System.Nullable<int> value);
+    partial void OnAgeChanged();
+    partial void OnCreationDateChanging(System.DateTime value);
+    partial void OnCreationDateChanged();
+    partial void OnDisplayNameChanging(string value);
+    partial void OnDisplayNameChanged();
+    partial void OnDownVotesChanging(int value);
+    partial void OnDownVotesChanged();
+    partial void OnEmailHashChanging(string value);
+    partial void OnEmailHashChanged();
+    partial void OnLastAccessDateChanging(System.DateTime value);
+    partial void OnLastAccessDateChanged();
+    partial void OnLocationChanging(string value);
+    partial void OnLocationChanged();
+    partial void OnReputationChanging(int value);
+    partial void OnReputationChanged();
+    partial void OnUpVotesChanging(int value);
+    partial void OnUpVotesChanged();
+    partial void OnViewsChanging(int value);
+    partial void OnViewsChanged();
+    partial void OnWebsiteUrlChanging(string value);
+    partial void OnWebsiteUrlChanged();
+    partial void OnAccountIdChanging(System.Nullable<int> value);
+    partial void OnAccountIdChanged();
+    #endregion
+		
+		public User()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AboutMe", DbType="NVarChar(MAX)")]
+		public string AboutMe
+		{
+			get
+			{
+				return this._AboutMe;
+			}
+			set
+			{
+				if ((this._AboutMe != value))
+				{
+					this.OnAboutMeChanging(value);
+					this.SendPropertyChanging();
+					this._AboutMe = value;
+					this.SendPropertyChanged("AboutMe");
+					this.OnAboutMeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Age", DbType="Int")]
+		public System.Nullable<int> Age
+		{
+			get
+			{
+				return this._Age;
+			}
+			set
+			{
+				if ((this._Age != value))
+				{
+					this.OnAgeChanging(value);
+					this.SendPropertyChanging();
+					this._Age = value;
+					this.SendPropertyChanged("Age");
+					this.OnAgeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreationDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreationDate
+		{
+			get
+			{
+				return this._CreationDate;
+			}
+			set
+			{
+				if ((this._CreationDate != value))
+				{
+					this.OnCreationDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreationDate = value;
+					this.SendPropertyChanged("CreationDate");
+					this.OnCreationDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DisplayName", DbType="NVarChar(40) NOT NULL", CanBeNull=false)]
+		public string DisplayName
+		{
+			get
+			{
+				return this._DisplayName;
+			}
+			set
+			{
+				if ((this._DisplayName != value))
+				{
+					this.OnDisplayNameChanging(value);
+					this.SendPropertyChanging();
+					this._DisplayName = value;
+					this.SendPropertyChanged("DisplayName");
+					this.OnDisplayNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DownVotes", DbType="Int NOT NULL")]
+		public int DownVotes
+		{
+			get
+			{
+				return this._DownVotes;
+			}
+			set
+			{
+				if ((this._DownVotes != value))
+				{
+					this.OnDownVotesChanging(value);
+					this.SendPropertyChanging();
+					this._DownVotes = value;
+					this.SendPropertyChanged("DownVotes");
+					this.OnDownVotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailHash", DbType="NVarChar(40)")]
+		public string EmailHash
+		{
+			get
+			{
+				return this._EmailHash;
+			}
+			set
+			{
+				if ((this._EmailHash != value))
+				{
+					this.OnEmailHashChanging(value);
+					this.SendPropertyChanging();
+					this._EmailHash = value;
+					this.SendPropertyChanged("EmailHash");
+					this.OnEmailHashChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAccessDate", DbType="DateTime NOT NULL")]
+		public System.DateTime LastAccessDate
+		{
+			get
+			{
+				return this._LastAccessDate;
+			}
+			set
+			{
+				if ((this._LastAccessDate != value))
+				{
+					this.OnLastAccessDateChanging(value);
+					this.SendPropertyChanging();
+					this._LastAccessDate = value;
+					this.SendPropertyChanged("LastAccessDate");
+					this.OnLastAccessDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="NVarChar(100)")]
+		public string Location
+		{
+			get
+			{
+				return this._Location;
+			}
+			set
+			{
+				if ((this._Location != value))
+				{
+					this.OnLocationChanging(value);
+					this.SendPropertyChanging();
+					this._Location = value;
+					this.SendPropertyChanged("Location");
+					this.OnLocationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reputation", DbType="Int NOT NULL")]
+		public int Reputation
+		{
+			get
+			{
+				return this._Reputation;
+			}
+			set
+			{
+				if ((this._Reputation != value))
+				{
+					this.OnReputationChanging(value);
+					this.SendPropertyChanging();
+					this._Reputation = value;
+					this.SendPropertyChanged("Reputation");
+					this.OnReputationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpVotes", DbType="Int NOT NULL")]
+		public int UpVotes
+		{
+			get
+			{
+				return this._UpVotes;
+			}
+			set
+			{
+				if ((this._UpVotes != value))
+				{
+					this.OnUpVotesChanging(value);
+					this.SendPropertyChanging();
+					this._UpVotes = value;
+					this.SendPropertyChanged("UpVotes");
+					this.OnUpVotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Views", DbType="Int NOT NULL")]
+		public int Views
+		{
+			get
+			{
+				return this._Views;
+			}
+			set
+			{
+				if ((this._Views != value))
+				{
+					this.OnViewsChanging(value);
+					this.SendPropertyChanging();
+					this._Views = value;
+					this.SendPropertyChanged("Views");
+					this.OnViewsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WebsiteUrl", DbType="NVarChar(200)")]
+		public string WebsiteUrl
+		{
+			get
+			{
+				return this._WebsiteUrl;
+			}
+			set
+			{
+				if ((this._WebsiteUrl != value))
+				{
+					this.OnWebsiteUrlChanging(value);
+					this.SendPropertyChanging();
+					this._WebsiteUrl = value;
+					this.SendPropertyChanged("WebsiteUrl");
+					this.OnWebsiteUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="Int")]
+		public System.Nullable<int> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
 				}
 			}
 		}
