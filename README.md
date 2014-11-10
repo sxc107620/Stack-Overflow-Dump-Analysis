@@ -25,6 +25,7 @@ The project members are Scott Crain (github sxc107620), Niranjana Gajjelli (gith
 * 10/27 - Initial Metrics Parser added to repository (Stack Overflow CSV Generator)  
 * 10/28 - One-Page Project Summary and other such documents added
 * 11/6 - Metric List Updated, Metrics Parser updated
+* 11/10 - Data Extraction Completed (See CSV Files for the data)
 
 ###Upcoming Deliverables:
 * 11/12 - Progress Update
