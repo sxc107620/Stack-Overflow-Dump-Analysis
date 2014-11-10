@@ -17,11 +17,11 @@ namespace Stack_Overflow_CSV_Generator
     {
         const int MEAN = 2; //Constant pulled from the database
         const float STDEV = 12.77f; //Constant pulled from the database
-        const int MULT = 3; //Number of Standard Deviations above the mean to take (For Score)
-        const String Mode = "top"; //"accepted" answers or "top" Answers (relative to the mean)
+        const int MULT = 1; //Number of Standard Deviations above the mean to take (For Score)
+        const String Mode = "accepted"; //"accepted" answers or "top" Answers (relative to the mean)
         const int MEDIAN = 12253720 / 4; //12253720 is the median ID for accepted answers. But I have to use 8 partitions or I run Out of Memory.
-        const int ACCEPTMULT = 1; //Which of the partitions (1-9) to use for Accepted Answers
-        const String FILE = "TopAnswers_3.csv";
+        const int ACCEPTMULT = 9; //Which of the partitions (1-9) to use for Accepted Answers
+        const String FILE = "AcceptedAnswers_new_9.csv";
         static void Main(string[] args)
         {
             AnswersDataContext dc = new AnswersDataContext();
@@ -31,7 +31,7 @@ namespace Stack_Overflow_CSV_Generator
             //Between the Top and Accepted answers
             var answerList = from post in dc.Posts
                              where post.PostTypeId == 2
-                             select post;
+                             select new { post.Id, post.Body, post.CreationDate, post.ParentId };
 
             switch (Mode)
             {
@@ -44,15 +44,15 @@ namespace Stack_Overflow_CSV_Generator
                     answerList = from post in dc.Posts
                                  where acceptedAnswerIDs.Contains(post.Id)
                                  where post.Id < MEDIAN * ACCEPTMULT
-                                 where post.Id >= MEDIAN * (ACCEPTMULT-1)
-                                 select post;
+                                 where post.Id >= MEDIAN * (ACCEPTMULT - 1)
+                                 select new { post.Id, post.Body, post.CreationDate, post.ParentId };
                     break;
                 case "top":
                     //Just take all answers where the score is MULT Standard Deviations above the Mean
                     answerList = from post in dc.Posts
                                  where post.PostTypeId == 2
                                  where post.Score > MEAN + MULT * STDEV
-                                 select post;
+                                 select new { post.Id, post.Body, post.CreationDate, post.ParentId };
                     break;
                 default:
                     printHelpAndExit();
@@ -69,7 +69,7 @@ namespace Stack_Overflow_CSV_Generator
                 bool hasCode = hasSomeCode(post.Body);
                 int responseTime = getResponseTime(post.CreationDate, post.ParentId, dc);
                 //Console.WriteLine(posCounts[0] + "," + posCounts[1] + "," + posCounts[2] + "," + posCounts[3] + "," + hasLink + "," + hasCode + "," + responseTime);    
-                file.WriteLine(posCounts[0] + "," + posCounts[1] + "," + posCounts[2] + "," + posCounts[3] + "," + hasLink + "," + hasCode + "," + responseTime);    
+                file.WriteLine(posCounts[0] + "," + posCounts[1] + "," + posCounts[2] + "," + posCounts[3] + "," + hasLink + "," + hasCode + "," + responseTime);
             }
             file.Flush();
             file.Close();
