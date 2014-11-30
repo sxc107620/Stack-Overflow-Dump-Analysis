@@ -1,0 +1,5 @@
+On the subject of metric dependency, running significance tests in R showed that the Noun, Verb, Adjective, Word and Response Time metrics are all statistically dependent across all answer sets under examination. However, this is a very reasonable result - not every word in a sentence can be a singular part of speech assuming proper grammar (Another reasonable assumption for highly voted and/or accepted answers), meaning that as the number of words under one part of speech go up, the others will naturally rise to fill out the sentences. Furthermore, longer answers simply take more time to write, therefore some level of dependence is to be expected. However, link and code snippet presence are independent of both each other and all other metrics under consideration, another logical result seeing that copy/pasting a hyperlink or code snippet can easily be done regardless of the rest of your answer.
+
+
+Related Works:
+(To come shortly. I wanted to get this up for now though)
