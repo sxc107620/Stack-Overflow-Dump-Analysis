@@ -1,0 +1,17 @@
+Related:
+[1] is tangentially related to our work because of the connection between high quality answers and reputation as examined in that paper. However, their work does not identify what makes an answer good, instead claiming that good answers are heplful in building reputation, meaning that our works compliment each other more than anything.
+
+[2] is actually very similar to [1] in that it examines the reputation system, which compliments our work in an obvious manner. It specifically finds that so-called "expert" users tend to provide the highest quality answers, which is significant to us because that's a factor we were originally planning to consider until we realized that the only reputation we could factor would be the answerer's reputation at the time of the data dump, rendering it a relatively uninteresting factor.
+
+[3] examines Response Time, one of the metrics we used to determine answer quality, in-depth. However, rather than trying to determine how response time relates to answer quality as we are, the authors here attempt to predict the response time to a given question. Notably, they do consider some part-of-speech counting (Verbs and self-reference words such as I/me/my in particular) on the question, which we do similarly, if not for the same question.
+
+[4] seeks to answer a very similar question to what we answered, the difference being in the phrasing of good "answer" compared to good "example". Their research methodology focuses specifically on high-scoring (Threshold score of 7) questions with code snippets and tagged as Java, as opposed to the unrestricted variety of questions we pulled from. They also used different metrics - They considered score in both raw and normalized form (Where we only considered high vs low scoring according to a threshold) and length (In terms of pages of text), neither of which we took into consideration in the same way. However, we take into consideration link presence and response time, as well as length in terms of word counts and part of speech counts, none of which they consider.
+
+References:
+[1] A. Bosu, C. S. Corley et al. "Building reputation in StackOverflow: an empirical investigation", Proceedings of the 10th Working Conference on Mining Software Repositories, pp 89-92, 2013
+
+[2] D. Movshovits-Attias, Y. Movshovits-Attias, P. Steenkiste, C. Faloutsos, "Analysis of the reputation system and user contributions on a question answering website: StackOverflow", Advances in Social Networks Analysis and Mining (ASONAM), 2013 IEEE/ACM International Conference on, pp. 886-893, 2013
+
+[3] V. Baht, A. Gokhale et al. "Min(e)d Your Tags: Analysis of Question Response Time in Stack Overflow", Advances in Social Networks Analysis and Mining (ASONAM), 2014 IEEE/ACM International Conference on, pp. 328-335, 2014
+
+[4] S. Nasehi, J. Sillito et al. "What Makes a Good Code Example? A Study of Programming Q&A in StackOverflow", Software Maintenance (ICSM), 2012 28th IEEE International Conference on, pp. 25-34, 2012
